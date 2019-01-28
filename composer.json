@@ -1,0 +1,10 @@
+{
+  "require": {
+    "irazasyed/telegram-bot-sdk": "dev-develop"
+  },
+  "autoload": {
+    "psr-4": {
+      "TransAgentBot\\":"includes/"
+    }
+  }
+}
