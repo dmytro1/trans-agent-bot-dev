@@ -14,7 +14,7 @@ use Telegram\Bot\Keyboard\Keyboard;
 
 class BotCore {
 
-	CONST ENV = 'dev'; // dev or prod
+	CONST ENV = 'prod'; // dev or prod
 
 	public $telegram;
 	public $result;
@@ -151,6 +151,8 @@ class BotCore {
 			'text'         => $reply,
 			'reply_markup' => $this->prepare_start_keyboard(),
 		] );
+
+		$this->db->add_log( $this->chat_id, 'курс', '' );
 	}
 
 	public function calculator_message() {
@@ -237,6 +239,8 @@ class BotCore {
 
 			$this->db->update_meta_status( 'close', $this->chat_id,
 				'calculate_status' );
+
+			$this->db->add_log( $this->chat_id, 'калькулятор', $this->text );
 
 		} else {
 

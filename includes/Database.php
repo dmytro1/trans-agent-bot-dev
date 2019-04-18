@@ -18,6 +18,8 @@ class Database {
 		= BotCore::ENV == 'dev' ? 'currency_info_test' : 'currency_info';
 	private $meta_table
 		= BotCore::ENV == 'dev' ? 'users_meta_test' : 'users_meta';
+	private $logs_table
+		= BotCore::ENV == 'dev' ? 'logs_test' : 'logs';
 
 	public function __construct( $servername, $username, $password, $dbname ) {
 		$this->connection = new \mysqli( $servername, $username, $password,
@@ -212,5 +214,19 @@ class Database {
 		}
 
 		return FALSE;
+	}
+
+	public function add_log( $chat_id, $action, $value ) {
+
+		$user_id = $this->get_user_id( $chat_id );
+		$sql
+		         = "INSERT INTO {$this->logs_table} (user_id, user_action, val)
+					VALUES ('$user_id', '$action', '$value')";
+
+		if ( $this->connection->query( $sql ) === TRUE ) {
+			return "New record created successfully";
+		} else {
+			return "Error: " . $sql . "<br>" . $this->connection->error;
+		}
 	}
 }
