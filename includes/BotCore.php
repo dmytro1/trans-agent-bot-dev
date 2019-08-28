@@ -219,16 +219,17 @@ class BotCore {
 
 			$sum_usd = round( $this->text / $rate_cny + $commission, 2 );
 			$sum_uah = round( $sum_usd * $rate_uah, 2 );
+			$sum_uah_card = ceil( $sum_uah + $sum_uah * 0.01 );
 
 			//			Ваша сума: 490 ¥
 			//			Курс: 6,72 ¥,  28,2 ₴
 			//			Комісія: 0,0% -5 $
-			//			До сплати: 77,9 $ або 2197 ₴
+			//			До сплати: 77,9 $ або 2197 ₴ (на карту 27907₴)
 
 			$reply = "Ваша сума: <b>$this->text ¥</b>\r\n";
 			$reply .= "Курс: <b>$rate_cny ¥</b>, <b>$rate_uah ₴</b>\r\n";
 			$reply .= "Комісія: <b>+$commission $</b>\r\n";
-			$reply .= "До сплати: <b>$sum_usd $</b> або <b>$sum_uah ₴</b>";
+			$reply .= "До сплати: <b>$sum_usd $</b> або <b>$sum_uah ₴</b> (на карту <b>$sum_uah_card ₴</b>)";
 
 			$this->telegram->sendMessage( [
 				'chat_id'      => $this->chat_id,
